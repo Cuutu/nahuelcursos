@@ -4,13 +4,19 @@ import { getServerSession } from 'next-auth';
 import { authOptions, isAdmin, hasCourseAccess } from '@/lib/auth/auth';
 import { ObjectId } from 'mongodb';
 
+type Props = {
+  params: {
+    id: string;
+  };
+};
+
 // GET /api/cursos/[id] - Obtener un curso específico
 export async function GET(
   request: Request,
-  context: { params: { id: string } }
+  { params }: Props
 ) {
   try {
-    const { id } = context.params;
+    const { id } = params;
     
     if (!ObjectId.isValid(id)) {
       return NextResponse.json(
@@ -56,10 +62,10 @@ export async function GET(
 // PUT /api/cursos/[id] - Actualizar un curso (solo admin)
 export async function PUT(
   request: Request,
-  context: { params: { id: string } }
+  { params }: Props
 ) {
   try {
-    const { id } = context.params;
+    const { id } = params;
     
     if (!ObjectId.isValid(id)) {
       return NextResponse.json(
@@ -130,10 +136,10 @@ export async function PUT(
 // DELETE /api/cursos/[id] - Eliminar un curso (solo admin)
 export async function DELETE(
   request: Request,
-  context: { params: { id: string } }
+  { params }: Props
 ) {
   try {
-    const { id } = context.params;
+    const { id } = params;
     
     if (!ObjectId.isValid(id)) {
       return NextResponse.json(
