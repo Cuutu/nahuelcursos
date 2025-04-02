@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { useState } from 'react';
-import { FaUser, FaSignOutAlt, FaShoppingCart, FaBars, FaTimes } from 'react-icons/fa';
+import { FaUser, FaSignOutAlt, FaBars, FaTimes } from 'react-icons/fa';
 
 export default function Navbar() {
   const { data: session } = useSession();

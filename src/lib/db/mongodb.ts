@@ -12,7 +12,7 @@ let clientPromise: Promise<MongoClient>;
 
 if (process.env.NODE_ENV === 'development') {
   // En desarrollo, usamos una variable global para preservar la conexión entre recargas de página
-  let globalWithMongo = global as typeof globalThis & {
+  const globalWithMongo = global as typeof globalThis & {
     _mongoClientPromise?: Promise<MongoClient>;
   };
 

@@ -3,9 +3,12 @@ import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import { ObjectId } from 'mongodb';
+import { Session } from 'next-auth';
+import { JWT as NextAuthJWT } from 'next-auth/jwt';
+import type { DefaultSession } from 'next-auth';
 
 // Extender los tipos de NextAuth
-declare module "next-auth" {
+declare module 'next-auth' {
   interface User {
     id: string;
     role: string;
@@ -22,7 +25,12 @@ declare module "next-auth" {
   }
 }
 
-declare module "next-auth/jwt" {
+// Extender los tipos de JWT
+interface DefaultJWT {
+  id: string;
+  role: string;
+}
+declare module 'next-auth/jwt' {
   interface JWT {
     id: string;
     role: string;
@@ -37,7 +45,7 @@ export const authOptions: NextAuthOptions = {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Contraseña', type: 'password' }
       },
-      async authorize(credentials) {
+      async authorize(credentials: Record<"email" | "password", string> | undefined) {
         if (!credentials?.email || !credentials?.password) {
           throw new Error('Email y contraseña son requeridos');
         }
@@ -96,12 +104,12 @@ export const authOptions: NextAuthOptions = {
 };
 
 // Middleware para verificar si un usuario es administrador
-export const isAdmin = (session: any) => {
+export const isAdmin = (session: Session | null) => {
   return session?.user?.role === 'admin';
 };
 
 // Middleware para verificar si un usuario está autenticado
-export const isAuthenticated = (session: any) => {
+export const isAuthenticated = (session: Session | null) => {
   return !!session?.user;
 };
 
