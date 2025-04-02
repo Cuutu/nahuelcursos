@@ -7,13 +7,11 @@ import Link from 'next/link';
 import axios from 'axios';
 import { FaSave, FaTimes, FaSpinner } from 'react-icons/fa';
 
-interface EditarCursoProps {
-  params: {
-    id: string;
-  };
+interface Params {
+  id: string;
 }
 
-export default function EditarCurso({ params }: EditarCursoProps) {
+export default function EditarCurso({ params }: { params: Params }) {
   const { id } = params;
   const { data: session, status } = useSession();
   const router = useRouter();
