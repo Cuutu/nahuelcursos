@@ -4,16 +4,13 @@ import { getServerSession } from 'next-auth';
 import { authOptions, isAdmin, hasCourseAccess } from '@/lib/auth/auth';
 import { ObjectId } from 'mongodb';
 
-interface RouteParams {
-  params: {
-    id: string;
-  };
-}
-
 // GET /api/cursos/[id] - Obtener un curso específico
-export async function GET(request: Request, { params }: RouteParams) {
+export async function GET(
+  request: Request,
+  context: { params: { id: string } }
+) {
   try {
-    const { id } = params;
+    const { id } = context.params;
     
     if (!ObjectId.isValid(id)) {
       return NextResponse.json(
@@ -57,9 +54,12 @@ export async function GET(request: Request, { params }: RouteParams) {
 }
 
 // PUT /api/cursos/[id] - Actualizar un curso (solo admin)
-export async function PUT(request: Request, { params }: RouteParams) {
+export async function PUT(
+  request: Request,
+  context: { params: { id: string } }
+) {
   try {
-    const { id } = params;
+    const { id } = context.params;
     
     if (!ObjectId.isValid(id)) {
       return NextResponse.json(
@@ -128,9 +128,12 @@ export async function PUT(request: Request, { params }: RouteParams) {
 }
 
 // DELETE /api/cursos/[id] - Eliminar un curso (solo admin)
-export async function DELETE(request: Request, { params }: RouteParams) {
+export async function DELETE(
+  request: Request,
+  context: { params: { id: string } }
+) {
   try {
-    const { id } = params;
+    const { id } = context.params;
     
     if (!ObjectId.isValid(id)) {
       return NextResponse.json(
