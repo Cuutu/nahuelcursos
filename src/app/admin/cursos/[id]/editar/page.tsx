@@ -1,14 +1,15 @@
 import EditarCursoClient from './EditarCursoClient';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
-  searchParams: { [key: string]: string | string[] | undefined };
+  }>;
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export default function EditarCursoPage({
+export default async function EditarCursoPage({
   params,
 }: PageProps) {
-  return <EditarCursoClient id={params.id} />;
+  const resolvedParams = await params;
+  return <EditarCursoClient id={resolvedParams.id} />;
 } 
