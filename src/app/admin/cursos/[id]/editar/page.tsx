@@ -1,13 +1,14 @@
 import EditarCursoClient from './EditarCursoClient';
 
-interface PageParams {
-  id: string;
+interface PageProps {
+  params: {
+    id: string;
+  };
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export default function EditarCursoPage({
   params,
-}: {
-  params: PageParams;
-}) {
+}: PageProps) {
   return <EditarCursoClient id={params.id} />;
 } 
